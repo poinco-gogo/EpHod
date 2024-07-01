@@ -55,6 +55,8 @@ def parse_arguments():
                         help="Either 'average' or 'max'. How to derive Lx1 weights from Lx1280 tensor")
     parser.add_argument('--save_embeddings', default=0, type=int,
                         help="Whether to save 2560-dim EpHod embeddings for each sequence")
+    parser.add_argument('--param_path', type=str,
+                        help='Path to saved_models/ directory')
     args = parser.parse_args()
 
     return args
@@ -177,7 +179,7 @@ def main():
     
         # Predict pHopt for sequences in batches
         # First, initialize EpHod model class with optimal learned weights
-        ephod_model = models.EpHodModel()
+        ephod_model = models.EpHodModel(args.param_path)
         if args.verbose:
             print('Initializing EpHod model')
             print(f'Device is {ephod_model.device}')
